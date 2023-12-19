@@ -1,6 +1,7 @@
 package com.sparta.plusweekreviewassignment.service;
 
 import com.sparta.plusweekreviewassignment.dto.BoardResponseDto;
+import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
 import com.sparta.plusweekreviewassignment.entity.Board;
 import com.sparta.plusweekreviewassignment.repository.BoardRepository;
 import java.util.ArrayList;
@@ -24,5 +25,12 @@ public class BoardService {
       boardResponseDtos.add(new BoardResponseDto(board));
     }
     return boardResponseDtos;
+  }
+
+  public void createBoard(CreateRequestDto createRequestDto) {
+
+    Board board = new Board(createRequestDto);
+    boardRepository.save(board);
+
   }
 }

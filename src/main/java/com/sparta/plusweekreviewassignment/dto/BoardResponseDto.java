@@ -2,7 +2,9 @@ package com.sparta.plusweekreviewassignment.dto;
 
 
 import com.sparta.plusweekreviewassignment.entity.Board;
+import lombok.Getter;
 
+@Getter
 public class BoardResponseDto {
   private String title;
   private String nickname;

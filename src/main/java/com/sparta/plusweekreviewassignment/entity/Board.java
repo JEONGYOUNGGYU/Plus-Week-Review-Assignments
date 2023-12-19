@@ -1,5 +1,6 @@
 package com.sparta.plusweekreviewassignment.entity;
 
+import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +28,14 @@ public class Board extends TimeStamp {
   private String title;
 
   @Column
+  private String content;
+
+  @Column
   private String nickname;
 
+  public Board(CreateRequestDto createRequestDto) {
+    super();
+    this.title = createRequestDto.getTitle();
+    this.content = createRequestDto.getContent();
+  }
 }
