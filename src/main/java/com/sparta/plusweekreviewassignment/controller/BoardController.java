@@ -1,6 +1,7 @@
 package com.sparta.plusweekreviewassignment.controller;
 
 import com.sparta.plusweekreviewassignment.dto.BoardResponseDto;
+import com.sparta.plusweekreviewassignment.dto.CommonResponseDto;
 import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.UpdateRequestDto;
 import com.sparta.plusweekreviewassignment.service.BoardService;
@@ -31,24 +32,36 @@ public class BoardController {
   }
 
   @PostMapping
-  public ResponseEntity<BoardResponseDto> createBoard(
+  public ResponseEntity<CommonResponseDto> createBoard(
       @RequestBody @Valid CreateRequestDto createRequestDto) {
 
-    boardService.createBoard(createRequestDto);
-    return null;
+    try {
+      boardService.createBoard(createRequestDto);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(new CommonResponseDto("작성에 실패하였습니다.", 401));
+    }
+    return ResponseEntity.ok().body(new CommonResponseDto("작성이 완료되었습니다", 200));
   }
 
   @PatchMapping("/{boardId}")
-  public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long boardId,
+  public ResponseEntity<CommonResponseDto> updateBoard(@PathVariable Long boardId,
       @RequestBody UpdateRequestDto updateRequestDto) {
-    boardService.updateBoard(boardId, updateRequestDto);
+    try {
+      boardService.updateBoard(boardId, updateRequestDto);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(new CommonResponseDto("수정 실패하였습니다.", 401));
+    }
+    return ResponseEntity.badRequest().body(new CommonResponseDto("수정 성공하였습니다.", 200));
 
-    return null;
   }
 
   @DeleteMapping("/{boardId}")
-  public Long deleteBoard(@PathVariable Long boardId){
-    boardService.deleteBoard(boardId);
-    return null;
+  public ResponseEntity<CommonResponseDto> deleteBoard(@PathVariable Long boardId) {
+    try {
+      boardService.deleteBoard(boardId);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(new CommonResponseDto("삭제 실패하였습니다..", 401));
+    }
+    return ResponseEntity.badRequest().body(new CommonResponseDto("삭제 성공하였습니다.", 200));
   }
 }

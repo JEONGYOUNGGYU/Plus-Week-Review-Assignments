@@ -1,6 +1,7 @@
 package com.sparta.plusweekreviewassignment.service;
 
 import com.sparta.plusweekreviewassignment.dto.CommentCreateRequestDto;
+import com.sparta.plusweekreviewassignment.dto.CommentModifyRequestDto;
 import com.sparta.plusweekreviewassignment.dto.CommentReponseDto;
 import com.sparta.plusweekreviewassignment.entity.Board;
 import com.sparta.plusweekreviewassignment.entity.Comment;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class CommentService {
 
   }
 
-  public List<CommentReponseDto> getBoard(Board boardId, Long commentId) {
+  public List<CommentReponseDto> getComment(Board boardId, Long commentId) {
     // 게시글 가져오기
     Board board = boardRepository.findById(boardId.getBoardId()).orElseThrow(() ->
         new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -53,4 +55,33 @@ public class CommentService {
       return commentReponseDtoList;
 
   }
+
+  @Transactional
+  public void modifyComment(Board boardId,
+                            Comment commentId,
+                            CommentModifyRequestDto commentModifyRequestDto) {
+    // 댓글 가져오기
+    Comment comment = commentRepository.findById(commentId.getCommentId()).orElseThrow(() ->
+        new IllegalArgumentException("해당 댓글이 없습니다."));
+
+    // **댓글이 해당 게시글에 속하는지 확인** 챗 GPT가 만들어줌...
+    if(!comment.getBoard().getBoardId().equals(boardId.getBoardId())) {
+        throw new IllegalArgumentException("해당 댓글은 지정된 게시글에 속하지 않습니다.");
+      }
+      comment.setComment(commentModifyRequestDto.getComment());
+
+      commentRepository.save(comment);
+  }
+
+  public void deleteComment(Board boardId, Comment commentId) {
+
+    // 댓글 가져오기
+    Comment comment = commentRepository.findById(commentId.getCommentId()).orElseThrow(() ->
+        new IllegalArgumentException("해당 댓글이 없습니다."));
+    if(!comment.getBoard().getBoardId().equals(boardId.getBoardId())) {
+      throw new IllegalArgumentException("해당 댓글은 지정된 게시글에 속하지 않습니다.");
+    }
+    commentRepository.delete(comment);
+  }
+
 }
