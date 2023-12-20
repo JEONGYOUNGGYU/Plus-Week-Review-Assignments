@@ -2,12 +2,18 @@ package com.sparta.plusweekreviewassignment.entity;
 
 import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.UpdateRequestDto;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +39,10 @@ public class Board extends TimeStamp {
 
   @Column
   private String nickname;
+
+
+  @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  List<Comment> commentList = new ArrayList<>();
 
   public Board(CreateRequestDto createRequestDto) {
     super();
