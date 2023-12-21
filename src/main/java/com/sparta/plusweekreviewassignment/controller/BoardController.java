@@ -1,9 +1,9 @@
 package com.sparta.plusweekreviewassignment.controller;
 
+import com.sparta.plusweekreviewassignment.dto.BoardCreateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.BoardResponseDto;
+import com.sparta.plusweekreviewassignment.dto.BoardUpdateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.CommonResponseDto;
-import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
-import com.sparta.plusweekreviewassignment.dto.UpdateRequestDto;
 import com.sparta.plusweekreviewassignment.service.BoardService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -33,7 +33,7 @@ public class BoardController {
 
   @PostMapping
   public ResponseEntity<CommonResponseDto> createBoard(
-      @RequestBody @Valid CreateRequestDto createRequestDto) {
+      @RequestBody @Valid BoardCreateRequestDto createRequestDto) {
 
     try {
       boardService.createBoard(createRequestDto);
@@ -45,7 +45,7 @@ public class BoardController {
 
   @PatchMapping("/{boardId}")
   public ResponseEntity<CommonResponseDto> updateBoard(@PathVariable Long boardId,
-      @RequestBody UpdateRequestDto updateRequestDto) {
+      @RequestBody BoardUpdateRequestDto updateRequestDto) {
     try {
       boardService.updateBoard(boardId, updateRequestDto);
     } catch (Exception e) {

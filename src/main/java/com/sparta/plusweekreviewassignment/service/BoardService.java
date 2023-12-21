@@ -1,8 +1,8 @@
 package com.sparta.plusweekreviewassignment.service;
 
 import com.sparta.plusweekreviewassignment.dto.BoardResponseDto;
-import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
-import com.sparta.plusweekreviewassignment.dto.UpdateRequestDto;
+import com.sparta.plusweekreviewassignment.dto.BoardCreateRequestDto;
+import com.sparta.plusweekreviewassignment.dto.BoardUpdateRequestDto;
 import com.sparta.plusweekreviewassignment.entity.Board;
 import com.sparta.plusweekreviewassignment.repository.BoardRepository;
 import java.util.ArrayList;
@@ -28,19 +28,19 @@ public class BoardService {
     return boardResponseDtos;
   }
 
-  public void createBoard(CreateRequestDto createRequestDto) {
+  public void createBoard(BoardCreateRequestDto boardCreateRequestDto) {
 
-    Board board = new Board(createRequestDto);
+    Board board = new Board(boardCreateRequestDto);
     boardRepository.save(board);
 
   }
 
   @Transactional
-  public void updateBoard(Long boardId, UpdateRequestDto updateRequestDto) {
+  public void updateBoard(Long boardId, BoardUpdateRequestDto boardUpdateRequestDto) {
         Board board = findById(boardId);
 
         if(board.getBoardId().equals(boardId)) {
-          board.update(updateRequestDto);
+          board.update(boardUpdateRequestDto);
         }
   }
 

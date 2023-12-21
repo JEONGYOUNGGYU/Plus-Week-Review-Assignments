@@ -1,7 +1,7 @@
 package com.sparta.plusweekreviewassignment.entity;
 
-import com.sparta.plusweekreviewassignment.dto.CreateRequestDto;
-import com.sparta.plusweekreviewassignment.dto.UpdateRequestDto;
+import com.sparta.plusweekreviewassignment.dto.BoardCreateRequestDto;
+import com.sparta.plusweekreviewassignment.dto.BoardUpdateRequestDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,13 +43,13 @@ public class Board extends TimeStamp {
   @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
   List<Comment> commentList = new ArrayList<>();
 
-  public Board(CreateRequestDto createRequestDto) {
+  public Board(BoardCreateRequestDto createRequestDto) {
     super();
     this.title = createRequestDto.getTitle();
     this.content = createRequestDto.getContent();
   }
 
-  public void update(UpdateRequestDto updateRequestDto) {
+  public void update(BoardUpdateRequestDto updateRequestDto) {
     this.title = updateRequestDto.getTitle();
     this.content = updateRequestDto.getContent();
   }
