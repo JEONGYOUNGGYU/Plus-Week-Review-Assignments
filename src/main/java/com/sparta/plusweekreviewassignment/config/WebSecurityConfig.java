@@ -1,7 +1,7 @@
 package com.sparta.plusweekreviewassignment.config;
 
-import com.sparta.plusweekreviewassignment.security.JwtAuthorizationFilter;
-import com.sparta.plusweekreviewassignment.security.JwtUtil;
+import com.sparta.plusweekreviewassignment.jwt.JwtAuthorizationFilter;
+import com.sparta.plusweekreviewassignment.jwt.JwtUtil;
 import com.sparta.plusweekreviewassignment.security.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

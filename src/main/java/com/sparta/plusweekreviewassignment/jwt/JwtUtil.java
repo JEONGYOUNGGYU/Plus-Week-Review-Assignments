@@ -1,4 +1,4 @@
-package com.sparta.plusweekreviewassignment.security;
+package com.sparta.plusweekreviewassignment.jwt;
 
 import com.sparta.plusweekreviewassignment.entity.UserRoleEnum;
 import io.jsonwebtoken.*;

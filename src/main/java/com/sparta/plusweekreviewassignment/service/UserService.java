@@ -1,13 +1,13 @@
 package com.sparta.plusweekreviewassignment.service;
 
+import com.sparta.plusweekreviewassignment.dto.CommonResponseDto;
 import com.sparta.plusweekreviewassignment.dto.LoginRequestDto;
 import com.sparta.plusweekreviewassignment.dto.SignupRequestDto;
 import com.sparta.plusweekreviewassignment.entity.User;
 import com.sparta.plusweekreviewassignment.entity.UserRoleEnum;
 import com.sparta.plusweekreviewassignment.repository.UserRepository;
-import com.sparta.plusweekreviewassignment.security.JwtUtil;
+import com.sparta.plusweekreviewassignment.jwt.JwtUtil;
 import jakarta.persistence.EntityNotFoundException;
-import jdk.jshell.Snippet.Status;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,10 +35,12 @@ public class UserService {
 
     User user = new User(username, password, role);
 
-
-    userRepository.save(user);
-
-    return null;
+    if(password.contains(username)){
+      return ResponseEntity.badRequest().body(new CommonResponseDto("비밀번호는 아이디와 일치하면 안됩니다", 401));
+    }else{
+      userRepository.save(user);
+    }
+    return ResponseEntity.ok().body(new CommonResponseDto("회원가입이 완료되었습니다.", 200));
   }
 
   public ResponseEntity<?> login(LoginRequestDto loginRequestDto) {

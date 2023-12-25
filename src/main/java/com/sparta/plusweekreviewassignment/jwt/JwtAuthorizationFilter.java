@@ -1,5 +1,6 @@
-package com.sparta.plusweekreviewassignment.security;
+package com.sparta.plusweekreviewassignment.jwt;
 
+import com.sparta.plusweekreviewassignment.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,7 +35,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
       if (!jwtUtil.validateToken(tokenValue)) {           // 내가 만든 토큰이 맞는지 확인
         log.error("Token Error");
-//        res.setStatus(401);
+        res.setStatus(403);
         return;
       }
 
