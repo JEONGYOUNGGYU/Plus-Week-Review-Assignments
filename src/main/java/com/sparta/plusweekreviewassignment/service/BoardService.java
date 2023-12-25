@@ -45,12 +45,13 @@ public class BoardService {
                           BoardUpdateRequestDto boardUpdateRequestDto,
                           UserDetailsImpl userDetails) {
 
-
         Board board = findById(boardId);
 
-        if(board.getBoardId().equals(boardId)) {
-          board.update(boardUpdateRequestDto);
+        if(!userDetails.getUser().getUsername().equals(board.getUsername())) {
+          throw new IllegalArgumentException("유저가 다릅니다.");
         }
+        board.update(boardUpdateRequestDto);
+
   }
 
   public void deleteBoard(Long boardId) {
