@@ -37,7 +37,7 @@ public class Board extends TimeStamp {
   private String content;
 
   @Column
-  private String nickname;
+  private String username;
 
 
   @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

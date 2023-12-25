@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class BoardResponseDto {
   private String title;
-  private String nickname;
+  private String username;
 
   public BoardResponseDto(Board board) {
     this.title = board.getTitle();
-    this.nickname = board.getNickname();
+    this.username = board.getUsername();
   }
 }

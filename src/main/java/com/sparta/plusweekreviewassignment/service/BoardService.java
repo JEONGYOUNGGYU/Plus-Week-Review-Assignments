@@ -5,6 +5,7 @@ import com.sparta.plusweekreviewassignment.dto.BoardCreateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.BoardUpdateRequestDto;
 import com.sparta.plusweekreviewassignment.entity.Board;
 import com.sparta.plusweekreviewassignment.repository.BoardRepository;
+import com.sparta.plusweekreviewassignment.security.UserDetailsImpl;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,23 @@ public class BoardService {
     return boardResponseDtos;
   }
 
-  public void createBoard(BoardCreateRequestDto boardCreateRequestDto) {
+  public void createBoard(BoardCreateRequestDto boardCreateRequestDto, UserDetailsImpl userDetails) {
+
 
     Board board = new Board(boardCreateRequestDto);
-    boardRepository.save(board);
+
+    if(userDetails.getUser().getUsername().equals(userDetails.getUsername())) {
+      boardRepository.save(board);
+    }
 
   }
 
   @Transactional
-  public void updateBoard(Long boardId, BoardUpdateRequestDto boardUpdateRequestDto) {
+  public void updateBoard(Long boardId,
+                          BoardUpdateRequestDto boardUpdateRequestDto,
+                          UserDetailsImpl userDetails) {
+
+
         Board board = findById(boardId);
 
         if(board.getBoardId().equals(boardId)) {

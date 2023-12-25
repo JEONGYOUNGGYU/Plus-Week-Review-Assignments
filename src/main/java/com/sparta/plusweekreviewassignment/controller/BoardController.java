@@ -4,11 +4,13 @@ import com.sparta.plusweekreviewassignment.dto.BoardCreateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.BoardResponseDto;
 import com.sparta.plusweekreviewassignment.dto.BoardUpdateRequestDto;
 import com.sparta.plusweekreviewassignment.dto.CommonResponseDto;
+import com.sparta.plusweekreviewassignment.security.UserDetailsImpl;
 import com.sparta.plusweekreviewassignment.service.BoardService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,10 +35,11 @@ public class BoardController {
 
   @PostMapping
   public ResponseEntity<CommonResponseDto> createBoard(
-      @RequestBody @Valid BoardCreateRequestDto createRequestDto) {
+      @RequestBody @Valid BoardCreateRequestDto createRequestDto,
+      @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
     try {
-      boardService.createBoard(createRequestDto);
+      boardService.createBoard(createRequestDto, userDetails);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(new CommonResponseDto("작성에 실패하였습니다.", 401));
     }
@@ -45,9 +48,10 @@ public class BoardController {
 
   @PatchMapping("/{boardId}")
   public ResponseEntity<CommonResponseDto> updateBoard(@PathVariable Long boardId,
-      @RequestBody BoardUpdateRequestDto updateRequestDto) {
+      @RequestBody BoardUpdateRequestDto updateRequestDto,
+      @AuthenticationPrincipal UserDetailsImpl userDetails) {
     try {
-      boardService.updateBoard(boardId, updateRequestDto);
+      boardService.updateBoard(boardId, updateRequestDto, userDetails);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(new CommonResponseDto("수정 실패하였습니다.", 401));
     }
